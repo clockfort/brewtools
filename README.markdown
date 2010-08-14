@@ -6,6 +6,6 @@ A set of tools helpful to brewing your own beverages. Most all of the utilities 
 Utilities
 ---------
 
-* calc-alcohol-content.pl calculates the alcohol content of a beverage based on its specific gravity fermentation delta. It has code to accomodate for temperature variations. This temperature compensation code is for 60-deg F calibrated hydrometers, but I am led to believe this is by far the most prevalent hydrometer type.
+* calc-alcohol-content.pl calculates the alcohol content of a beverage based on its specific gravity fermentation delta. It has code to accommodate for temperature variations. This temperature compensation code is for 60-deg F calibrated hydrometers, but I am led to believe this is by far the most prevalent hydrometer type.
 
-* bottle-calculator.pl approximate the number of 12oz bottles that are required, based on the liquid's height and diameter of the fermenter or bottling bucket. (This assumes cylindrical fermenters/bottling buckets/etc, but again, this seems to be the case almost all of the time)
+* bottle-calculator.pl approximates the number of 12oz bottles that are required, based on the liquid's height and diameter of the fermenter or bottling bucket. (This assumes cylindrical fermenters/bottling buckets/etc, but again, this seems to be the case almost all of the time)
