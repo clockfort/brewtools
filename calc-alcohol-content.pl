@@ -17,6 +17,7 @@ use warnings;
 use Switch;
 
 my $tempMode = 0;
+my $temp_unit = "";
 my ($start_grav,$start_temp,$end_grav,$end_temp);
 
 print "Would you like to enter temperature data to obtain a more accurate figure? (Y/N): ";
@@ -36,17 +37,33 @@ while(!$valid){
 		print "Please respond with \"Y\" or \"N\".\n"
 	}
 }
+if($tempMode){
+	print "Would you like to use °F or °C? (F/C): ";
+	$valid = 0;
+	while(!$valid){
+	        $input = <>;
+	        chomp $input;
+		$input =~ tr/a-z/A-Z/;
+	        if($input eq "F" || $input eq "C"){
+	                $valid = 1;
+			$temp_unit=$input;
+	        }
+        	else{
+               		print "Please respond with \"F\" or \"C\".\n"
+        	}
+	}
+}
 
 print "Enter pre-fermentation specific gravity: ";
 $start_grav=<>;
 if($tempMode){
-	print "Enter liquid temperature of this reading (Deg F): ";
+	print "Enter liquid temperature of this reading (°$temp_unit): ";
 	$start_temp=<>;
 }
 print "Enter post-fermentation specific gravity: ";
 $end_grav=<>;
 if($tempMode){
-	print "Enter liquid temperature of this reading (Deg F): ";
+	print "Enter liquid temperature of this reading (°$temp_unit): ";
 	$end_temp=<>;
 }
 if($tempMode){
@@ -61,9 +78,11 @@ print "Total alcohol content of finished beverage is approximately: $alcohol_con
 sub correctHydrometerReadings{
 my $temperature = shift;
 my $reading = shift;
-
+if($temp_unit eq "C"){
+	$temperature = $temperature * 9/5 + 32;
+}
 switch ($temperature) {
-	case {$temperature<50} { die "ERROR: No correction values availabile for under 50 degrees.\n"; }
+	case {$temperature<50} { die "ERROR: No correction values availabile for this low a temperature.\n"; }
 	case {$temperature<60} { $reading += (0.05*($temperature) - 3)/1000; } #Simple linear regression for this small temperature segment
 	case {$temperature==60} {} #Hydrometer is calibrated for this value
 	case {$temperature>60} { $reading += (6.105362041e-4*$temperature) + ((-8.184529406e-3)*$temperature**0.5) +  (2.676188365e-2); } #Regression calculated, RSS=3.91e-9.
